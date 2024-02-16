@@ -1,0 +1,16 @@
+{
+  "name": "bot-mc-java",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samudra",
+  "license": "ISC",
+  "dependencies": {
+    "minecraft-protocol": "^1.46.0",
+    "mineflayer": "^4.19.0",
+    "prismarine-viewer": "^1.28.0"
+  }
+}
