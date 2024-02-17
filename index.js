@@ -32,7 +32,4 @@ io.on('connection', (socket) => {
     });
 });
 
-const port = 3000; // Ganti port sesuai keinginan Anda
-server.listen(port, () => {
-    console.log(`Server berjalan di http://localhost:${port}`);
-});
+server.listen(process.env.PORT || 3000);
