@@ -2,7 +2,7 @@ const mc = require('minecraft-protocol');
 const readline = require('readline');
 const express = require('express');
 const http = require('http');
-const socketIO = require('socket.io');
+const WebSocket = require('ws');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -28,7 +28,7 @@ const client = mc.createClient({
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const wss = new WebSocket.Server({ server });
 
 // Boilerplate
 client.on('disconnect', function (packet) {
@@ -98,18 +98,37 @@ rl.on('line', function (line) {
 });
 
 // Membuat server HTTP untuk antarmuka web
-const portWeb = 4000; // Sesuaikan port sesuai keinginan Anda
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-// Membuat server Socket.IO
-io.on('connection', (socket) => {
+// Menyimpan koneksi WebSocket
+const webSocketConnections = new Set();
+
+// Menyebarkan pesan ke semua koneksi WebSocket
+function broadcastConsoleMessage(message) {
+  webSocketConnections.forEach(ws => {
+    ws.send(JSON.stringify({ type: 'console-message', content: message }));
+  });
+}
+
+// Menggunakan WebSocket untuk menangani koneksi antarmuka web
+wss.on('connection', (ws) => {
   console.log('Web interface connected');
 
-  // Mengirim pesan konsol ke antarmuka web
-  rl.on('line', function (line) {
-    socket.emit('console-message', line);
+  // Menambahkan koneksi WebSocket ke set
+  webSocketConnections.add(ws);
+
+  // Menangani pesan dari antarmuka web ke server
+  ws.on('message', (message) => {
+    // Misalnya, Anda dapat menangani pesan dari antarmuka web di sini
+    console.log('Received message from web interface:', message);
+  });
+
+  // Menangani penutupan koneksi
+  ws.on('close', () => {
+    webSocketConnections.delete(ws);
+    console.log('Web interface disconnected');
   });
 });
 
