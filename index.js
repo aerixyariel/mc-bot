@@ -11,19 +11,11 @@ const rl = readline.createInterface({
   prompt: 'Enter a message> '
 });
 
-const [,, host, port, username, auth] = process.argv;
-
-if (!host || !port) {
-  console.error('Usage: node client_chat.js <host> <port> <username>');
-  console.error('Usage (offline mode): node client_chat.js <host> <port> offline');
-  process.exit(1);
-}
-
 const client = mc.createClient({
-  host,
-  port,
-  username,
-  auth
+  host: 'samudra.aternos.me',
+  port: '64210',
+  username: 'Bot',
+  auth: 'offline',
 });
 
 const app = express();
