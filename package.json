@@ -1,17 +1,19 @@
 {
   "name": "bot-mc-java",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Minecraft Console Interface with Web Access",
+  "main": "index.js", // Sesuaikan dengan nama file utama Anda
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Aerixy",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
     "http": "0.0.1-security",
     "minecraft-protocol": "^1.46.0",
-    "socket.io": "^4.0.0"
+    "prismarine-chat": "^0.0.10",
+    "readline": "^1.3.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.3.1",
   }
 }
