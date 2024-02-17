@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Data Viewer</title>
+</head>
+<body>
+  <div id="errorContainer"></div>
+  <div id="dataContainer"></div>
+
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <script>
+    const socket = io();
+
+    // Listen for error messages from the server
+    socket.on('error', function (error) {
+      appendError(error);
+    });
+
+    // Listen for data packets from the server
+    socket.on('data', function (packet) {
+      appendData(packet);
+    });
+
+    // Function to append errors to the error container
+    function appendError(error) {
+      const errorContainer = document.getElementById('errorContainer');
+      const errorElement = document.createElement('div');
+      errorElement.textContent = `Error: ${error}`;
+      errorContainer.appendChild(errorElement);
+    }
+
+    // Function to append data packets to the data container
+    function appendData(packet) {
+      const dataContainer = document.getElementById('dataContainer');
+      const dataElement = document.createElement('div');
+      dataElement.textContent = JSON.stringify(packet, null, 2);
+      dataContainer.appendChild(dataElement);
+    }
+  </script>
+</body>
+</html>
