@@ -1,32 +1,37 @@
-const mc = require('minecraft-protocol');
+const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
+const minecraftProtocol = require('minecraft-protocol');
 
-const server = http.createServer((req, res) => {
-  console.log(`Just got a request at ${req.url}!`);
-  res.write('Yo!');
-  res.end();
-});
-
+const app = express();
+const server = http.createServer(app);
 const io = socketIO(server);
 
-const client = mc.createClient({
-  host: 'samudra.aternos.me',
-  port: '64210',
-  username: 'Bot',
-  auth: 'offline',
+// Kode untuk koneksi klien Minecraft
+const mcClient = minecraftProtocol.createClient({
+    host: 'localhost', // Sesuaikan dengan host Minecraft server Anda
+    port: 25565, // Sesuaikan dengan port Minecraft server Anda
+    username: 'YourMinecraftUsername' // Ganti dengan username Minecraft Anda
 });
 
-client.on('error', (error) => {
-  // Send error information to connected web clients
-  io.emit('error', error);
+mcClient.on('login', () => {
+    console.log('Connected to Minecraft server');
 });
 
-client.on('packet', (data, packetMeta) => {
-  // Send data information to connected web clients
-  io.emit('data', { data, packetMeta });
+// Kode untuk antarmuka web
+io.on('connection', (socket) => {
+    console.log('User connected');
+
+    socket.on('chat-message', (message) => {
+        mcClient.write('chat', { message });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
 });
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log('Server listening on port 3000');
+const port = 3000; // Ganti port sesuai keinginan Anda
+server.listen(port, () => {
+    console.log(`Server berjalan di http://localhost:${port}`);
 });
