@@ -9,6 +9,7 @@
   "author": "Aerixy",
   "license": "ISC",
   "dependencies": {
-    "minecraft-protocol": "^1.46.0"
+    "minecraft-protocol": "^1.46.0",
+    "socket.io": "^4.0.1"
   }
 }
