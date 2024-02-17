@@ -6,11 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Samudra",
+  "author": "Aerixy",
   "license": "ISC",
   "dependencies": {
-    "minecraft-protocol": "^1.46.0",
-    "mineflayer": "^4.19.0",
-    "prismarine-viewer": "^1.28.0"
+    "minecraft-protocol": "^1.46.0"
   }
 }
