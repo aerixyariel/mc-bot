@@ -9,9 +9,10 @@ const io = socketIO(server);
 
 // Kode untuk koneksi klien Minecraft
 const mcClient = minecraftProtocol.createClient({
-    host: 'localhost', // Sesuaikan dengan host Minecraft server Anda
-    port: 25565, // Sesuaikan dengan port Minecraft server Anda
-    username: 'YourMinecraftUsername' // Ganti dengan username Minecraft Anda
+  host: 'samudra.aternos.me',
+  port: '64210',
+  username: 'Bot',
+  auth: 'offline',
 });
 
 mcClient.on('login', () => {
