@@ -1,4 +1,4 @@
-var http = require('http');
+const http = require('http');
 const mc = require('minecraft-protocol')
 
 var client = null;
